@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { connect } = require('../config/mongoDB.js')
 
 async function testConnect() {
@@ -7,10 +8,20 @@ async function testConnect() {
 }
 
 
+const user = {
+    get: async (userid) =>  {
+        const db = await connect(userid);
+        return await db.collection('user').findOne({
+            _id: new ObjectId(userid)
+        }) 
+    }
+}
+
+
 const auth = {
     login: async (username) => {
         const db = await connect();
-        return await db.collection('login').findOne({
+        return await db.collection('user').findOne({
             username: username
         })
     }
@@ -18,5 +29,6 @@ const auth = {
 
 module.exports = {
     testConnect,
-    auth
+    auth,
+    user
 }

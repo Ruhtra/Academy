@@ -1,4 +1,4 @@
-// const validate = require("../functions/validator.js");
+const validate = require("../functions/validator.js");
 const Database = require("../functions/queryDB.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,13 +7,8 @@ const SECRET = process.env.SECRET;
 
 module.exports = {
     login: async (req, res) => {
-        value = {
-            username: req.body.username,
-            password: req.body.password
-        }
-        //needed valiadate for input datas
-        // const {error, value} = validate.auth.login(req.body)
-        // if (error) throw error
+        const {error, value} = validate.auth.login(req.body)
+        if (error) throw error
 
         const user = await Database.auth.login(value.username)
 
