@@ -2,12 +2,12 @@ const validate = require("../functions/validator.js");
 const Database = require("../functions/queryDB.js");
 
 module.exports = {
-    get: async (req, res) => {
-        const {error, value} = validate.gym.id(req.query.id)
+    post: async (req, res) => {
+        const {error, value} = validate.gym.post(req.body)
         if (error) throw error
 
-        const user = await Database.gym.get(value.id)
+        const response = await Database.gym.post(value)
 
-        return res.send(user)
+        return res.send(response)
     }
 }

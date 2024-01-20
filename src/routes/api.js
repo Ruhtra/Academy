@@ -1,11 +1,14 @@
 const controllerAuth = require('../controllers/auth.js')
 const controllerUser = require('../controllers/user.js')
+const controllerGym = require('../controllers/gym.js')
 const router = require('express').Router()
 
 const use = fn => (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next)
 }
 
+
+router.post('/gym/post', use(controllerGym.post))
 
 router.get('/user/get', use(controllerUser.get))
 
