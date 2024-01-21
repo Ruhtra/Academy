@@ -1,6 +1,7 @@
 const controllerAuth = require('../controllers/auth.js')
 const controllerUser = require('../controllers/user.js')
 const controllerGym = require('../controllers/gym.js')
+const jwt = require("../middleware/jwt.js");
 const router = require('express').Router()
 
 const use = fn => (req, res, next) => {
@@ -8,7 +9,8 @@ const use = fn => (req, res, next) => {
 }
 
 
-router.post('/gym/post', use(controllerGym.post))
+router.get('/gym/get', jwt.requiredJWT,  use(controllerGym.get))
+router.post('/gym/post', jwt.requiredJWT,  use(controllerGym.post))
 
 router.get('/user/get', use(controllerUser.get))
 

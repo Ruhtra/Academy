@@ -21,6 +21,9 @@ function criarDataComHora(data, hora) {
 }
 
 function convert(data) {
+    data.user_id = new ObjectId(data.user_id)
+
+
     data.musculos = data.musculos.map(e => new ObjectId(e))
 
 
@@ -32,16 +35,18 @@ function convert(data) {
 
 
 const gym = {
-    get: async (userid) => {
+    get: async (id) => {
         const db = await connect();
-        return await db.collection('treino').findOne({
-            _id: new ObjectId(userid)
-        }) 
+        return await db.collection('treino').find({
+            user_id: new ObjectId(id)
+        }).toArray()
     },
     post: async(data) => {
         const { session, db } = await connectSession();
         try {
             session.startTransaction();
+
+            //possivel validação de se _id existe
 
             // validate ids
             if (data.musculos != undefined) {

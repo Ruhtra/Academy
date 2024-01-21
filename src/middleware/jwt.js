@@ -24,11 +24,12 @@ module.exports = {
                 statusCode: 401,
                 message: "Não autorizado!",
             })
-        }3
+        }
 
         try {
-            jwt.verify(token, SECRET);
-            req.permission = 'admin'
+            const decoded = jwt.verify(token, SECRET);
+
+            req._id = decoded._id
         } catch (err) {
             return res.status(401).json({
                 statusCode: 401,
